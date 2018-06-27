@@ -1,0 +1,27 @@
+module tb;
+  logic clk;
+  logic [2:0] req, gnt;
+  
+  always #2ns clk = ~clk;
+  
+  defparam arb.DELAY=5;
+  rr_arbiter2 arb(.*);
+  
+  initial begin
+    $dumpfile("dump.vcd"); $dumpvars;
+    clk=0;req=0;
+    @(posedge clk);
+    req = 3'b001;
+    @(posedge clk);
+    req = 3'b011;
+    @(posedge clk);
+    req = 3'b110;
+    @(posedge clk);
+    req = 3'b000;
+    @(posedge clk);
+    req = 3'b111;
+    @(posedge clk);
+    #50ns;
+    $finish;
+  end
+endmodule
