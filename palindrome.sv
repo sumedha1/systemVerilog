@@ -1,5 +1,16 @@
 // Code your testbench here
 // or browse Examples
+
+class palindrome;
+  rand bit[31:0] a;
+  
+  constraint my_c {
+    foreach (a[i]) {
+      a[i] == a[31-i];
+    }
+  }
+endclass
+      
 class palin;
   rand int a;
   
