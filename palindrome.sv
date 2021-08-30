@@ -1,5 +1,6 @@
 // Code your testbench here
 // or browse Examples
+// Create 32 bit palindromes 
 
 class palindrome;
   rand bit[31:0] a;
