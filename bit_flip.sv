@@ -1,3 +1,5 @@
+// create arrays with exactly 4 bit flips between each element 
+
 class bit_flip;
   rand bit [5:0] a[3];
   
