@@ -1,0 +1,58 @@
+module tb;
+  typedef enum {ADD,SUB,MUL,DIV} instr_e;
+  
+  class instruction;
+    int latency[instr_e];
+    rand instr_e instr[$];
+    
+    function new();
+      latency[ADD]=2;
+      latency[SUB]=2;
+      latency[MUL]=4;
+      latency[DIV]=6;
+    endfunction
+    
+    constraint my_c {
+      instr.size() inside {[3:11]};
+      /*foreach(instr[i]) {
+        if(instr[i]==ADD) {
+          foreach(instr[j]) {
+            if ((j>i)&&(j<=i+latency[ADD])) instr[j]!=ADD;
+          }
+        }
+        if(instr[i]==SUB) {
+          foreach(instr[j]) {
+            if ((j>i)&&(j<=i+latency[ADD])) instr[j]!=SUB;
+          }
+        }
+  
+        if(instr[i]==MUL) {
+          foreach(instr[j]) {
+            if ((j>i)&&(j<=i+latency[MUL])) instr[j]!=MUL;
+          }
+        }
+        if(instr[i]==DIV) {
+          foreach(instr[j]) {
+            if ((j>i)&&(j<=i+latency[DIV])) instr[j]!=DIV;
+          }
+        }
+      }*/
+      
+      foreach(instr[i]) {
+        foreach(instr[j]) {
+          if ((j>i)&&(j<=i+latency[instr[i]])) instr[j] != instr[i];
+        }
+      }
+    }
+  endclass 
+            
+  initial begin 
+    instruction inst;
+    inst=new();
+    repeat(10) begin 
+      inst.randomize();
+      $display("%p", inst.instr);
+    end 
+    //$display("%p",inst.instr[2+:inst.latency[inst.instr[2]]]);
+  end 
+endmodule 
